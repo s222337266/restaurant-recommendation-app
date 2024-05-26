@@ -3,16 +3,18 @@ pipeline {
 
     environment {
         // Define any environment variables here
-        NODE_ENV = 'production'
-        DOCKER_IMAGE = 'restaurant-recommendation-app' // Name of the Docker image
+        BUILD_DIR = 'build' // Directory where the build artifacts will be created
     }
 
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Build Docker image
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    // Install dependencies
+                    sh 'npm install'
+
+                    // Run build script
+                    sh 'npm run build'
                 }
             }
         }
@@ -40,10 +42,8 @@ pipeline {
             steps {
                 script {
                     // Deploy to a test environment
-                    // For simplicity, we’ll just start the Docker container here
-                    // In a real scenario, you might deploy to a staging server or container
+                    // For simplicity, we’ll just print the message
                     echo 'Deploying to test environment...'
-                    sh 'docker run -d -p 3000:3000 --name test-$DOCKER_IMAGE $DOCKER_IMAGE'
                 }
             }
         }
