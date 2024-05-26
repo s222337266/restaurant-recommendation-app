@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Recommendations</title>
+    <script>
+        async function fetchRestaurants() {
+            const response = await fetch('http://localhost:3000/restaurants');
+            const restaurants = await response.json();
+            const list = document.getElementById('restaurant-list');
+            list.innerHTML = '';
+            restaurants.forEach(restaurant => {
+                const li = document.createElement('li');
+                li.textContent = `${restaurant.name} - ${restaurant.cuisine} - ${restaurant.location} - Rating: ${restaurant.rating}`;
+                list.appendChild(li);
+            });
+        }
+
+        async function addRestaurant() {
+            const name = document.getElementById('name').value;
+            const cuisine = document.getElementById('cuisine').value;
+            const location = document.getElementById('location').value;
+            const rating = document.getElementById('rating').value;
+            await fetch('http://localhost:3000/restaurants', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, cuisine, location, rating }),
+            });
+            fetchRestaurants();
+        }
+    </script>
+</head>
+<body onload="fetchRestaurants()">
+    <h1>Restaurant Recommendations</h1>
+    <ul id="restaurant-list"></ul>
+    <h2>Add a Restaurant</h2>
+    <form onsubmit="event.preventDefault(); addRestaurant();">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="text" id="cuisine" placeholder="Cuisine" required />
+        <input type="text" id="location" placeholder="Location" required />
+        <input type="number" id="rating" placeholder="Rating" required min="1" max="5" />
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
