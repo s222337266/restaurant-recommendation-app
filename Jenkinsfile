@@ -24,7 +24,7 @@ pipeline {
                     // Run tests
                     // If you have tests, this is where you would run them
                     // For example: `sh 'npm test'`
-                    echo 'Running tests...'
+                    bat 'npm test'
                 }
             }
         }
