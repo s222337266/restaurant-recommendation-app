@@ -22,7 +22,7 @@ describe('Restaurant Recommendation App', function() {
                     expect(res.body.cuisine).to.equal(restaurant.cuisine);
                     expect(res.body.location).to.equal(restaurant.location);
                     expect(res.body.rating).to.equal(restaurant.rating);
-                    done();
+                    done(); // Signal completion
                 });
         });
     });
