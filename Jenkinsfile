@@ -11,10 +11,10 @@ pipeline {
             steps {
                 script {
                     // Install dependencies
-                    sh 'npm install'
+                    bat 'npm install'
 
                     // Run build script
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
