@@ -45,7 +45,7 @@ pipeline {
                 script {
                     // Run SonarQube analysis
                     withSonarQubeEnv('sq1') { // 'sonar' should match the name you configured
-                        bat "${SONARQUBE_SCANNER_HOME}\\bin\\sonar-scanner.bat"
+                        bat "${SONARQUBE_SCANNER_HOME}\\bin\\sonar-scanner.bat -Dsonar.token=${SONAR_TOKEN}"
                     }
                 }
             }
