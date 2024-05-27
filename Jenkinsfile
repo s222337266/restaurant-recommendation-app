@@ -44,14 +44,14 @@ pipeline {
                 jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
             }
             environment {
-                scannerHome = tool 'Sonar'
+                scannerHome = tool 'sonar'
             }
             steps {
                 // Analyze the code using SonarQube
                 // bat 'sonar-scanner'
                 // withSonarQubeEnv(installationName : 'sq1'){
                 script {
-                    withSonarQubeEnv('sq1') {
+                    withSonarQubeEnv('sonar') {
                         bat  "${scannerHome}/bin/sonar-scanner\
                                 -Dsonar.token=${SONAR_TOKEN}"
                         //bat "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"
