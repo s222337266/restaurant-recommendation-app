@@ -44,7 +44,7 @@ pipeline {
                 jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
             }
             environment {
-                scannerHome = tool 'sq1'
+                scannerHome = tool 'Sonar'
             }
             steps {
                 // Analyze the code using SonarQube
