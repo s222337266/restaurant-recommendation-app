@@ -49,13 +49,16 @@ pipeline {
             steps {
                 // Analyze the code using SonarQube
                 // bat 'sonar-scanner'
-                withSonarQubeEnv(installationName : 'sq1'){
-                    bat  "${scannerHome}/bin/sonar-scanner\
-                            -Dsonar.token=${SONAR_TOKEN}"
-                    //bat "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"
-                    // bat "mvn sonar:sonar"
-                    // bat 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar'
-                }                
+                // withSonarQubeEnv(installationName : 'sq1'){
+                script {
+                    withSonarQubeEnv('sq1') {
+                        bat  "${scannerHome}/bin/sonar-scanner\
+                                -Dsonar.token=${SONAR_TOKEN}"
+                        //bat "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"
+                        // bat "mvn sonar:sonar"
+                        // bat 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar'
+                    }                
+                }
             }
         }
         stage('Deploy to Test Environment') {
