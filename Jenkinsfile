@@ -36,7 +36,7 @@ pipeline {
                 script {
                     // Run SonarQube analysis
                     withSonarQubeEnv('SonarQube Server') {
-                        sh "${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner"
+                        bat "${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner"
                     }
                 }
             }
