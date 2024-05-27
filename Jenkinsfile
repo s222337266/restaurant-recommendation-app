@@ -43,11 +43,16 @@ pipeline {
             tools {
                 jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
             }
+            environment {
+                scannerHome = tool 'sq1'
+            }
             steps {
                 // Analyze the code using SonarQube
                 // bat 'sonar-scanner'
                 withSonarQubeEnv(installationName : 'sq1'){
-                    bat "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"
+                    bat  "${scannerHome}/bin/sonar-scanner\
+                            -Dsonar.token=${SONAR_TOKEN}"
+                    //bat "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"
                     // bat "mvn sonar:sonar"
                     // bat 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar'
                 }                
