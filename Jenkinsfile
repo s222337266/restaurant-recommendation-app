@@ -29,12 +29,15 @@ pipeline {
             }
         }
         stage('Code Quality Analysis') {
+            tools {
+                jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
+            }
             steps {
                 script {
-                    // Code quality analysis
-                    // This could be running a linter or using a tool like SonarQube
-                    // For example: `sh 'npm run lint'`
-                    echo 'Running code quality analysis...'
+                    // Run SonarQube analysis
+                    withSonarQubeEnv('SonarQube Server') {
+                        sh "${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner"
+                    }
                 }
             }
         }
