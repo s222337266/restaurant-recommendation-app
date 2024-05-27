@@ -30,16 +30,6 @@ pipeline {
                 }
             }
         }
-        // stage('Code Quality Analysis') {
-        //     tools {
-        //         jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
-        //     }
-        //     steps {
-        //         echo "Perfoming code analyses using SonarQube.."
-        //         echo 'Tool: SonarScanner'
-        //         echo "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"            
-        //     }
-        // }
         stage('SonarQube Analysis') {
             steps {
                 script {
