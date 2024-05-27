@@ -4,6 +4,7 @@ pipeline {
     environment {
         // Define any environment variables here
         BUILD_DIR = 'build' // Directory where the build artifacts will be created
+        SONAR_TOKEN = "sqa_15771b5e67dfbcf6d6cf73049e646e1c14f9c464"
     }
 
     stages {
@@ -33,12 +34,9 @@ pipeline {
                 jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
             }
             steps {
-                script {
-                    // Run SonarQube analysis
-                    withSonarQubeEnv('SonarQube Server') {
-                        bat "${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner"
-                    }
-                }
+                echo "Perfoming code analyses using SonarQube.."
+                echo 'Tool: SonarQube'
+                echo "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"            
             }
         }
         stage('Deploy to Test Environment') {
