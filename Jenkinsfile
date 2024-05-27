@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Run SonarQube analysis
-                    withSonarQubeEnv('sonar') { // 'sonar' should match the name you configured
+                    withSonarQubeEnv('sq1') { // 'sonar' should match the name you configured
                         bat "${SONARQUBE_SCANNER_HOME}\\bin\\sonar-scanner.bat"
                     }
                 }
