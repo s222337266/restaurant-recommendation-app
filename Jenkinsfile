@@ -5,6 +5,7 @@ pipeline {
         // Define any environment variables here
         BUILD_DIR = 'build' // Directory where the build artifacts will be created
         SONAR_TOKEN = "sqa_15771b5e67dfbcf6d6cf73049e646e1c14f9c464"
+        SONARQUBE_SCANNER_HOME = tool name: 'sq1-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
     }
 
     stages {
@@ -29,35 +30,13 @@ pipeline {
                 }
             }
         }
-        // stage('Code Quality Analysis') {
-        //     tools {
-        //         jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
-        //     }
-        //     steps {
-        //         echo "Perfoming code analyses using SonarQube.."
-        //         echo 'Tool: SonarScanner'
-        //         echo "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"            
-        //     }
-        // }
-        stage('Code Analysis') {
-            tools {
-                jdk "jdk17" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
-            }
-            environment {
-                scannerHome = tool 'sonar'
-            }
+        stage('SonarQube Analysis') {
             steps {
-                // Analyze the code using SonarQube
-                // bat 'sonar-scanner'
-                // withSonarQubeEnv(installationName : 'sq1'){
                 script {
-                    withSonarQubeEnv('sonar') {
-                        bat  "${scannerHome}/bin/sonar-scanner\
-                                -Dsonar.token=${SONAR_TOKEN}"
-                        //bat "mvn sonar:sonar -Dsonar.token=${SONAR_TOKEN}"
-                        // bat "mvn sonar:sonar"
-                        // bat 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar'
-                    }                
+                    // Run SonarQube analysis
+                    withSonarQubeEnv('sq1') { // 'sonar' should match the name you configured
+                        bat "${SONARQUBE_SCANNER_HOME}\\bin\\sonar-scanner.bat -Dsonar.token=${SONAR_TOKEN}"
+                    }
                 }
             }
         }
